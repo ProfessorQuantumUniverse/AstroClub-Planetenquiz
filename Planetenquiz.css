@@ -56,13 +56,12 @@ html, body {
 /* Einfaches Overlay */
 body::before {
     content: '';
-    /* Overlay soll sich ebenfalls bewegen, damit kein Parallax-Effekt entsteht */
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(20, 30, 50, 0.75);
+    background: rgba(5, 3, 69, 0.326);
     pointer-events: none;
     z-index: 0;
 }
@@ -84,8 +83,6 @@ body::after {
     z-index: -1; /* Hinter Overlay und Inhalt */
     pointer-events: none;
 }
-
-/* Hinweis: Um einen wirklich endlosen nahtlosen Loop zu bekommen, sollte ein zusammengesetztes Bild (Original + Flip) erstellt und als eine Datei mit repeat-y genutzt werden. Diese CSS-Lösung deckt zwei Bildschirmhöhen ab. */
 
 .container {
     max-width: 850px;
