@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planeten-Quiz</title>
+	<script src="Planetenquiz.js" defer></script>
+	<link rel="stylesheet" href="Planetenquiz.css">
+</head>
+<body>
+<div class="container">
+    <div class="text-box header-box">
+        <div class="lang-switch">
+            <label for="langSelect">Sprache / Language:</label>
+            <select id="langSelect" aria-label="Language selector">
+                <option value="de">Deutsch</option>
+                <option value="en">English</option>
+            </select>
+        </div>
+        <img src="AstroClub_logo.jpg" alt="AstroClub Logo" class="logo">
+        <h1 id="titleText">Planeten-Quiz</h1>
+    </div>
+    <form id="quizForm">
+        <div id="quizContent"></div>
+        <div id="dragDropContent"></div>
+    <input type="button" id="evaluateBtn" class="action-button" value="Quiz auswerten" onclick="checkAnswers()">
+    </form>
+    <div id="result"></div>
+    <div id="antwort"></div>
+</div>
