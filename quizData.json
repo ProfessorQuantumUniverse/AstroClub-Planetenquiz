@@ -95,7 +95,7 @@
   "dragDrop": {
     "title": {"de": "Sortiere die Planeten nach ihrer Entfernung zur Sonne.", "en": "Sort the planets by their distance from the Sun."},
     "instruction": {"de": "Ziehe die Planeten in die richtige Reihenfolge (von nah nach fern):", "en": "Drag the planets into the correct order (from nearest to farthest):"},
-    "planets": {"de": ["Merkur", "Venus", "Erde", "Mars", "Jupiter", "Saturn", "Uranus", "Neptun"], "en": ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"]},
+    "planets": {"de": ["Jupiter", "Neptun", "Uranus", "Saturn", "Merkur", "Mars", "Erde", "Venus"], "en": ["Earth", "Saturn", "Mercury", "Uranus", "Neptune", "Venus", "Mars", "Jupiter"]},
     "correctOrder": {"de": ["Merkur", "Venus", "Erde", "Mars", "Jupiter", "Saturn", "Uranus", "Neptun"], "en": ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"]}
   },
   "resultTexts": {
