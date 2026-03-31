@@ -1,5 +1,5 @@
-// Dynamische Quizdaten aus quizData.json mit Mehrsprachigkeit
-let quizData;
+// Dynamische Quizdaten aus quizData.js mit Mehrsprachigkeit
+// quizData is loaded from quizData.js
 let currentLang = 'de';
 let globalJokerUsed = false;
 let draggedElement = null;
@@ -40,14 +40,10 @@ document.addEventListener('DOMContentLoaded', function() {
         sel.value = currentLang;
         sel.addEventListener('change', (e) => setLang(e.target.value));
     }
-    fetch('quizData.json')
-        .then(response => response.json())
-        .then(data => {
-            quizData = data;
-            applyLanguageToStaticUI();
-            renderQuiz();
-            initDragAndDrop();
-        });
+    // quizData is loaded from quizData.js
+    applyLanguageToStaticUI();
+    renderQuiz();
+    initDragAndDrop();
 });
 
 function renderQuiz() {
