@@ -1,0 +1,112 @@
+// Quiz data embedded for offline use
+const quizData = {
+  "ui": {
+    "title": {"de": "Planeten-Quiz", "en": "Planet Quiz"},
+    "submitButtonLabel": {"de": "Quiz auswerten", "en": "Evaluate Quiz"},
+    "jokerButtonLabel": {"de": "50:50 Joker", "en": "50:50 Joker"},
+    "jokerUsedText": {"de": "Joker verwendet ✓", "en": "Joker used ✓"}
+  },
+  "introText": {"de": "Willkommen zum Planeten-Quiz! Teste dein Wissen über unser Sonnensystem.", "en": "Welcome to the Planet Quiz! Test your knowledge about our solar system."},
+  "questions": [
+    {
+      "id": "frage1",
+      "question": {"de": "Wie viele Planeten gibt es in unserem Sonnensystem?", "en": "How many planets are in our solar system?"},
+      "answers": {"de": ["6", "8", "9", "10"], "en": ["6", "8", "9", "10"]},
+      "correct": 1,
+      "jokerText": {"de": "Der 50:50 Joker wurde bereits verwendet!", "en": "The 50:50 joker has already been used!"}
+    },
+    {
+      "id": "frage2",
+      "question": {"de": "Welcher dieser Planeten hat die meisten Monde?", "en": "Which of these planets has the most moons?"},
+      "answers": {"de": ["Merkur", "Erde", "Jupiter", "Uranus"], "en": ["Mercury", "Earth", "Jupiter", "Uranus"]},
+      "correct": 2,
+      "jokerText": {"de": "Der 50:50 Joker wurde bereits verwendet!", "en": "The 50:50 joker has already been used!"}
+    },
+    {
+      "id": "frage3",
+      "question": {"de": "Welcher Planet hat die geringste Durchschnittsentfernung von uns?", "en": "Which planet has the smallest average distance from Earth?"},
+      "answers": {"de": ["Merkur", "Mars", "Saturn", "Uranus"], "en": ["Mercury", "Mars", "Saturn", "Uranus"]},
+      "correct": 0,
+      "jokerText": {"de": "Der 50:50 Joker wurde bereits verwendet!", "en": "The 50:50 joker has already been used!"}
+    },
+    {
+      "id": "frage4",
+      "question": {"de": "Seit wann ist Pluto kein Planet mehr?", "en": "Since when is Pluto no longer a planet?"},
+      "answers": {"de": ["1989", "2001", "2006", "2014"], "en": ["1989", "2001", "2006", "2014"]},
+      "correct": 2,
+      "jokerText": {"de": "Der 50:50 Joker wurde bereits verwendet!", "en": "The 50:50 joker has already been used!"}
+    },
+    {
+      "id": "frage5",
+      "question": {"de": "Wie groß ist der Temperaturunterschied auf dem Merkur?", "en": "What is the temperature difference on Mercury?"},
+      "answers": {"de": ["30°", "370°", "650°", "790°"], "en": ["30°", "370°", "650°", "790°"]},
+      "correct": 2,
+      "jokerText": {"de": "Der 50:50 Joker wurde bereits verwendet!", "en": "The 50:50 joker has already been used!"}
+    },
+    {
+      "id": "frage6",
+      "question": {"de": "Ist ein Venus-Tag oder ein Venus-Jahr länger?", "en": "Is a Venus day or a Venus year longer?"},
+      "answers": {"de": ["Venus-Tag", "Venus-Jahr", "Gleich lang", "Immer unterschiedlich"], "en": ["Venus day", "Venus year", "Same length", "Always different"]},
+      "correct": 0,
+      "jokerText": {"de": "Der 50:50 Joker wurde bereits verwendet!", "en": "The 50:50 joker has already been used!"}
+    },
+    {
+      "id": "frage7",
+      "question": {"de": "Wann entstand der Erdmond?", "en": "When did Earth's moon form?"},
+      "answers": {"de": ["1899", "Vor 1 Millionen Jahren", "Vor 1 Milliarden Jahren", "Vor 4,5 Milliarden Jahren"], "en": ["1899", "1 million years ago", "1 billion years ago", "4.5 billion years ago"]},
+      "correct": 3,
+      "jokerText": {"de": "Der 50:50 Joker wurde bereits verwendet!", "en": "The 50:50 joker has already been used!"}
+    },
+    {
+      "id": "frage8",
+      "question": {"de": "Wie hoch ist der Olympus Mons?", "en": "How high is Olympus Mons?"},
+      "answers": {"de": ["22km", "34km", "100km", "370km"], "en": ["22 km", "34 km", "100 km", "370 km"]},
+      "correct": 0,
+      "jokerText": {"de": "Der 50:50 Joker wurde bereits verwendet!", "en": "The 50:50 joker has already been used!"}
+    },
+    {
+      "id": "frage9",
+      "question": {"de": "Wie oft passt die Erde in den größten Planeten, den Jupiter?", "en": "How many times does Earth fit into the largest planet, Jupiter?"},
+      "answers": {"de": ["13 Mal", "130 Mal", "1300 Mal", "13000 Mal"], "en": ["13 times", "130 times", "1300 times", "13000 times"]},
+      "correct": 2,
+      "jokerText": {"de": "Der 50:50 Joker wurde bereits verwendet!", "en": "The 50:50 joker has already been used!"}
+    },
+    {
+      "id": "frage10",
+      "question": {"de": "Wie lange werden Saturns Ringe noch existieren?", "en": "How long will Saturn's rings still exist?"},
+      "answers": {"de": ["10 Jahre", "1 Millionen Jahre", "100 Millionen Jahre", "Auf Ewig"], "en": ["10 years", "1 million years", "100 million years", "Forever"]},
+      "correct": 2,
+      "jokerText": {"de": "Der 50:50 Joker wurde bereits verwendet!", "en": "The 50:50 joker has already been used!"}
+    },
+    {
+      "id": "frage11",
+      "question": {"de": "Welche Neigung hat der Uranus?", "en": "What axial tilt does Uranus have?"},
+      "answers": {"de": ["23°", "54°", "97°", "180°"], "en": ["23°", "54°", "97°", "180°"]},
+      "correct": 2,
+      "jokerText": {"de": "Der 50:50 Joker wurde bereits verwendet!", "en": "The 50:50 joker has already been used!"}
+    },
+    {
+      "id": "frage12",
+      "question": {"de": "Wie schnell sind Neptuns Stürme?", "en": "How fast are Neptune's storms?"},
+      "answers": {"de": ["1000 km/h", "2000 km/h", "5000 km/h", "10000 km/h"], "en": ["1000 km/h", "2000 km/h", "5000 km/h", "10000 km/h"]},
+      "correct": 0,
+      "jokerText": {"de": "Der 50:50 Joker wurde bereits verwendet!", "en": "The 50:50 joker has already been used!"}
+    }
+  ],
+  "dragDrop": {
+    "title": {"de": "Sortiere die Planeten nach ihrer Entfernung zur Sonne.", "en": "Sort the planets by their distance from the Sun."},
+    "instruction": {"de": "Ziehe die Planeten in die richtige Reihenfolge (von nah nach fern):", "en": "Drag the planets into the correct order (from nearest to farthest):"},
+    "planets": {"de": ["Merkur", "Venus", "Erde", "Mars", "Jupiter", "Saturn", "Uranus", "Neptun"], "en": ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"]},
+    "correctOrder": {"de": ["Merkur", "Venus", "Erde", "Mars", "Jupiter", "Saturn", "Uranus", "Neptun"], "en": ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"]}
+  },
+  "resultTexts": {
+    "de": [
+      "Ergebnis: Du hast {score} von 160 Punkten erreicht. <a href=\"{restartUrl}\">Quiz neustarten.</a>",
+      "Hast du auch alle Fragen beantwortet?"
+    ],
+    "en": [
+      "Result: You scored {score} out of 160 points. <a href=\"{restartUrl}\">Restart quiz.</a>",
+      "Did you answer all the questions?"
+    ]
+  }
+};
