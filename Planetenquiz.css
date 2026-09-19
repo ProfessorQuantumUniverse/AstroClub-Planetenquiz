@@ -6,10 +6,14 @@
     --primary-color: #4a5fc1;
     --primary-dark: #3a4ba1;
     --secondary-color: #6b7fd1;
-    --accent-color: #5eb3f6;
+    /* Orange setzt sich klar vom blauen Hintergrundbild ab.
+       -deep ist die Variante fuer orangen Text auf hellen Flaechen (Kontrast 4.9:1),
+       -color traegt dunklen Text (5.3:1) und leuchtet auf dunklem Grund. */
+    --accent-color: #ff9d3c;
+    --accent-hover: #ffb164;
+    --accent-deep: #b85309;
     --success-color: #4caf50;
     --error-color: #ef5350;
-    --warning-color: #ff9800;
     --text-light: #ffffff;
     --text-dark: #2c3e50;
     --text-gray: #607d8b;
@@ -37,7 +41,7 @@ body {
     background-attachment: scroll;
     margin: 0;
     padding: 0;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
     color: var(--text-dark);
     min-height: 100vh;
     position: relative;
@@ -129,7 +133,7 @@ body::after {
     border-radius: 6px;
     border: 1px solid var(--border-color);
     background: var(--bg-hover);
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
     font-size: 0.85rem;
     font-weight: 500;
     cursor: pointer;
@@ -153,7 +157,7 @@ body::after {
 .text-box h1 {
     margin: 10px 0 0 0;
     font-size: clamp(2rem, 6vw, 3.5rem);
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Space Grotesk', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
     font-weight: 700;
     color: var(--primary-color);
     text-align: center;
@@ -211,7 +215,7 @@ input[type="text"] {
     border: 2px solid var(--border-color);
     border-radius: 8px;
     font-size: 1rem;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
     font-weight: 500;
     transition: var(--transition);
     background: rgba(255, 255, 255, 0.95);
@@ -256,7 +260,7 @@ input[type="text"]:focus {
     padding: 0 10px; /* Innenabstand horizontal, vertikal über height geregelt */
     font-size: 0.95rem;
     font-weight: 600;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
     border-radius: 8px;
     cursor: grab;
     transition: var(--transition);
@@ -314,7 +318,7 @@ input[type="text"]:focus {
     font-weight: 700;
     color: var(--primary-color);
     min-width: 25px;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Space Grotesk', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
 }
 
 .drop-zone input[type="text"] {
@@ -339,7 +343,7 @@ input[type="text"]:focus {
     margin: 6px 4px;
     font-size: 0.95rem;
     font-weight: 600;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
     border-radius: 8px;
     cursor: pointer;
     transition: var(--transition);
@@ -361,7 +365,7 @@ input[type="text"]:focus {
     display: inline-block;
     font-size: 1.1rem;
     font-weight: 600;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
     margin: 15px auto;
     transition: var(--transition);
     cursor: pointer;
@@ -376,15 +380,15 @@ input[type="text"]:focus {
 
 /* Globaler Auswerte-Button (außerhalb von .text-box) */
 .action-button {
-    background: var(--primary-color);
+    background: var(--accent-color);
     border: none;
-    color: var(--text-light);
+    color: var(--text-dark);
     padding: 14px 35px;
     text-align: center;
     display: inline-block;
     font-size: 1.1rem;
     font-weight: 600;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
     margin: 15px auto;
     transition: var(--transition);
     cursor: pointer;
@@ -393,19 +397,19 @@ input[type="text"]:focus {
 }
 
 .action-button:hover {
-    background: var(--primary-dark);
+    background: var(--accent-hover);
     box-shadow: var(--shadow-hover);
 }
 
 /* Joker Button */
 .joker-button {
-    background: var(--warning-color);
+    background: var(--accent-color);
     border: none;
-    color: var(--text-light);
+    color: var(--text-dark);
     padding: 10px 20px;
     font-size: 0.95rem;
     font-weight: 600;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
     border-radius: 8px;
     cursor: pointer;
     transition: var(--transition);
@@ -415,7 +419,7 @@ input[type="text"]:focus {
 }
 
 .joker-button:hover {
-    background: #f57c00;
+    background: var(--accent-hover);
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
 }
 
@@ -447,18 +451,38 @@ button:disabled,
 #antwort {
     font-size: 1.2rem;
     font-weight: 600;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
     text-align: center;
     margin: 20px 0;
-    padding: 20px;
+    padding: 24px;
     border-radius: var(--border-radius);
-    background: var(--primary-color);
-    color: var(--text-light);
+    background: var(--bg-light);
+    backdrop-filter: blur(10px);
+    color: var(--text-dark);
+    border-top: 4px solid var(--accent-color);
     box-shadow: var(--shadow);
 }
 
+/* Ohne Inhalt bleibt keine leere Flaeche stehen */
+#result:empty,
+#antwort:empty {
+    display: none;
+}
+
+.result-score {
+    line-height: 1.6;
+}
+
+.result-feedback {
+    margin-top: 12px;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--accent-deep);
+    line-height: 1.6;
+}
+
 #result a {
-    color: var(--accent-color);
+    color: var(--accent-deep);
     text-decoration: none;
     border-bottom: 2px solid var(--accent-color);
     transition: var(--transition);
@@ -466,8 +490,8 @@ button:disabled,
 }
 
 #result a:hover {
-    color: var(--text-light);
-    border-bottom-color: var(--text-light);
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
 }
 
 /* Responsive Design */
@@ -535,4 +559,44 @@ button:disabled,
         font-size: 1rem;
         min-width: 20px;
     }
+}
+
+/* Ueberschrift ueber einem Frageblock */
+.section-heading {
+    padding: 18px 30px;
+    text-align: center;
+}
+
+.section-heading h2 {
+    font-family: 'Space Grotesk', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    font-size: clamp(1.15rem, 3vw, 1.5rem);
+    font-weight: 700;
+    color: var(--primary-color);
+    letter-spacing: -0.3px;
+}
+
+.section-heading h2::after {
+    content: '';
+    display: block;
+    width: 56px;
+    height: 3px;
+    margin: 10px auto 0;
+    border-radius: 2px;
+    background: var(--accent-color);
+}
+
+/* Hinweis auf die herunterladbare Offline-Version (nur auf der Online-Seite) */
+.offline-hint {
+    max-width: 800px;
+    margin: 1.5rem auto 2.5rem;
+    padding: 0 1rem;
+    text-align: center;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.offline-hint a {
+    color: var(--accent-color);
+    font-weight: 600;
 }

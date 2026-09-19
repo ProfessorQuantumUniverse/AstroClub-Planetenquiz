@@ -21,10 +21,18 @@
         <h1 id="titleText">Planeten-Quiz</h1>
     </div>
     <form id="quizForm">
-        <div id="quizContent"></div>
+        <!-- Reihenfolge: allgemeine Fragen, dann Sortieraufgabe, dann je eine Frage pro Planet -->
+        <div id="quizContentGeneral"></div>
         <div id="dragDropContent"></div>
+        <div id="quizContentPlanets"></div>
     <input type="button" id="evaluateBtn" class="action-button" value="Quiz auswerten" onclick="checkAnswers()">
     </form>
     <div id="result"></div>
     <div id="antwort"></div>
+    <!-- data-online-only: faellt beim Offline-Build weg, dort zeigt der Link auf sich selbst -->
+    <p class="offline-hint" data-online-only>
+        Kein Internet vor Ort?
+        <a href="Planetenquiz-offline.html" download>Quiz als einzelne Datei herunterladen</a>
+        – läuft per Doppelklick in jedem Browser, völlig offline.
+    </p>
 </div>

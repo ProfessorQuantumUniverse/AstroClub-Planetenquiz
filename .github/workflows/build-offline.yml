@@ -1,0 +1,55 @@
+name: Offline-Version bauen
+
+# Haelt Planetenquiz-offline.html automatisch aktuell, sobald sich Fragen,
+# Design oder Logik aendern - sonst verteilt man irgendwann einen alten Stand.
+on:
+  push:
+    branches: [main]
+    # Laeuft bei jeder Aenderung im Repo. Ausgenommen ist nur die gebaute Datei
+    # selbst - sonst wuerde der Rueckschreib-Commit den Workflow erneut ausloesen.
+    paths-ignore:
+      - Planetenquiz-offline.html
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Einzeldatei bauen
+        run: node build-offline.mjs
+
+      - name: Ergebnis pruefen
+        run: |
+          test -f Planetenquiz-offline.html
+          # Keine externen Verweise - sonst laeuft die Datei offline nicht.
+          if grep -qE 'https?://' Planetenquiz-offline.html; then
+            echo "Fehler: externe URLs in der Offline-Datei gefunden:"
+            grep -oE 'https?://[^"'"'"')< ]+' Planetenquiz-offline.html | sort -u
+            exit 1
+          fi
+          echo "OK - $(du -h Planetenquiz-offline.html | cut -f1), keine externen Verweise"
+
+      # Bei Pull Requests wird nur gebaut und geprueft, nicht zurueckgeschrieben.
+      - name: Aenderung zurueckschreiben
+        if: github.event_name != 'pull_request'
+        run: |
+          if git diff --quiet -- Planetenquiz-offline.html; then
+            echo "Keine Aenderung."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Planetenquiz-offline.html
+          git commit -m "Offline-Version neu gebaut"
+          git push

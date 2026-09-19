@@ -4,16 +4,43 @@ let currentLang = 'de';
 let globalJokerUsed = false;
 let draggedElement = null;
 
+// localStorage ist bei file://-Aufrufen nicht in jedem Browser verfuegbar
+function readStoredLang() {
+    try {
+        return localStorage.getItem('quiz_lang');
+    } catch (e) {
+        return null;
+    }
+}
+
+function storeLang(lang) {
+    try {
+        localStorage.setItem('quiz_lang', lang);
+    } catch (e) {
+        /* ohne Speicher laeuft das Quiz trotzdem */
+    }
+}
+
 function detectInitialLang() {
-    const saved = localStorage.getItem('quiz_lang');
+    const saved = readStoredLang();
     if (saved === 'de' || saved === 'en') return saved;
     const nav = (navigator.language || 'de').toLowerCase();
     return nav.startsWith('de') ? 'de' : 'en';
 }
 
+// In der Offline-Einzeldatei stecken die Quizdaten direkt im Dokument,
+// weil fetch() auf file:// von der Same-Origin-Policy blockiert wird.
+function loadQuizData() {
+    const embedded = document.getElementById('quizDataEmbedded');
+    if (embedded) {
+        return Promise.resolve(JSON.parse(embedded.textContent));
+    }
+    return fetch('quizData.json').then(response => response.json());
+}
+
 function setLang(lang) {
     currentLang = (lang === 'en') ? 'en' : 'de';
-    localStorage.setItem('quiz_lang', currentLang);
+    storeLang(currentLang);
     document.documentElement.setAttribute('lang', currentLang);
     // Reset states that depend on language rendering
     globalJokerUsed = false;
@@ -40,8 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
         sel.value = currentLang;
         sel.addEventListener('change', (e) => setLang(e.target.value));
     }
-    fetch('quizData.json')
-        .then(response => response.json())
+    loadQuizData()
         .then(data => {
             quizData = data;
             applyLanguageToStaticUI();
@@ -50,21 +76,55 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 });
 
-function renderQuiz() {
-    const quizContent = document.getElementById('quizContent');
-    quizContent.innerHTML = '';
-    quizData.questions.forEach((q, idx) => {
-        const questionDiv = document.createElement('div');
-        questionDiv.className = 'text-box';
-        const questionHtml = `<div class="question"><h2>${q.question[currentLang]}</h2>` +
-            q.answers[currentLang].map((a, i) => `
+// Baut eine einzelne Frage inklusive Joker-Button.
+// jokerNr bleibt ueber beide Gruppen hinweg fortlaufend, weil useFiftyFifty()
+// die Buttons ueber 'joker1'...'jokerN' wieder einsammelt.
+function renderQuestion(q, jokerNr) {
+    const questionDiv = document.createElement('div');
+    questionDiv.className = 'text-box';
+    questionDiv.innerHTML = `<div class="question"><h2>${q.question[currentLang]}</h2>` +
+        q.answers[currentLang].map((a, i) => `
                 <label class="option">
                     <input type="radio" name="${q.id}" value="${i}" id="${q.id}${String.fromCharCode(97+i)}"> ${String.fromCharCode(97+i)}) ${a}
                 </label>`).join('') +
-            `</div>
-            <button type="button" class="joker-button" onclick="useFiftyFifty('${q.id}', 'joker${idx+1}')" id="joker${idx+1}">${quizData.ui.jokerButtonLabel[currentLang]}</button>`;
-        questionDiv.innerHTML = questionHtml;
-        quizContent.appendChild(questionDiv);
+        `</div>
+            <button type="button" class="joker-button" onclick="useFiftyFifty('${q.id}', 'joker${jokerNr}')" id="joker${jokerNr}">${quizData.ui.jokerButtonLabel[currentLang]}</button>`;
+    return questionDiv;
+}
+
+// Ueberschrift ueber einem Frageblock; fehlt der Text in quizData, entfaellt sie.
+function renderSectionHeading(key) {
+    const label = quizData.ui?.sections?.[key]?.[currentLang];
+    if (!label) return null;
+    const box = document.createElement('div');
+    box.className = 'text-box section-heading';
+    box.innerHTML = `<h2>${label}</h2>`;
+    return box;
+}
+
+// Fragen ohne group gelten als allgemein, damit aeltere quizData.json weiter laufen.
+function questionsOf(group) {
+    return quizData.questions.filter(q => (q.group || 'general') === group);
+}
+
+function renderQuiz() {
+    // Reihenfolge im Formular: allgemeine Fragen -> Sortieraufgabe -> Planetenfragen
+    const order = ['general', 'planets'];
+    const targets = {
+        general: document.getElementById('quizContentGeneral'),
+        planets: document.getElementById('quizContentPlanets'),
+    };
+    let jokerNr = 0;
+
+    order.forEach(group => {
+        const target = targets[group];
+        target.innerHTML = '';
+        const questions = questionsOf(group);
+        if (questions.length === 0) return;
+
+        const heading = renderSectionHeading(group);
+        if (heading) target.appendChild(heading);
+        questions.forEach(q => target.appendChild(renderQuestion(q, ++jokerNr)));
     });
 
     // Drag & Drop
@@ -213,12 +273,29 @@ function useFiftyFifty(question, buttonId) {
     }
 }
 
+// Jede Frage zaehlt 2 Punkte, jede richtige Planetenposition 1 - mal 5 als Endwert.
+function maxScore() {
+    return 5 * (2 * quizData.questions.length + quizData.dragDrop.correctOrder[currentLang].length);
+}
+
+// Passenden Spruch zur erreichten Punktzahl suchen (Stufen absteigend sortiert).
+function feedbackFor(score, max) {
+    if (!Array.isArray(quizData.feedback) || max === 0) return '';
+    const percent = (score / max) * 100;
+    const tier = [...quizData.feedback]
+        .sort((a, b) => b.minPercent - a.minPercent)
+        .find(f => percent >= f.minPercent);
+    return tier ? (tier[currentLang] || tier['de'] || '') : '';
+}
+
 function checkAnswers() {
+    const antwort = document.getElementById("antwort");
     let unanswered = quizData.questions.filter(q => !document.querySelector(`input[name='${q.id}']:checked`));
     if (unanswered.length > 0) {
-        document.getElementById("antwort").innerHTML = quizData.resultTexts[currentLang][1];
+        antwort.innerHTML = quizData.resultTexts[currentLang][1];
         return;
     }
+    antwort.innerHTML = '';
     let score = 0;
     quizData.questions.forEach(q => {
         let answer = document.querySelector(`input[name='${q.id}']:checked`);
@@ -241,8 +318,16 @@ function checkAnswers() {
         }
     });
     let Newscore = 5 * score;
+    let max = maxScore();
     let result = document.getElementById('result');
-    result.innerHTML = quizData.resultTexts[currentLang][0].replace('{score}', Newscore).replace('{restartUrl}', window.location.href);
+    const summary = quizData.resultTexts[currentLang][0]
+        .replace('{score}', Newscore)
+        .replace('{maxScore}', max)
+        .replace('{restartUrl}', window.location.href);
+    const praise = feedbackFor(Newscore, max);
+    result.innerHTML = `<p class="result-score">${summary}</p>` +
+        (praise ? `<p class="result-feedback">${praise}</p>` : '');
+    result.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 
